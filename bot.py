@@ -32,7 +32,7 @@ def roll_callback():
 			msg_parts = message.split()
 			cmd, flags = msg_parts[0].lower(), msg_parts[1:]
 			
-			reply("DEBUG: " + repr(cmd, flags))
+			reply("DEBUG: " + repr((cmd, flags)))
 			if cmd == "roll":
 				if len(flags) == 1:
 					try:
