@@ -27,6 +27,7 @@ def roll_callback():
 		message = json_body['text']
 		### BOT CODE GOES HERE! ###
 		message = message.strip()
+		reply(message)
 		if len(message) > 0 and message[0] == "/":
 			# perhaps it is a bot command
 			msg_parts = message.split()
