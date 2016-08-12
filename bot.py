@@ -46,7 +46,7 @@ def roll_callback():
 				elif len(flags) == 2:
 					# /roll [max_value [roll_quantity]]
 					try:
-						max_value, roll_quantity = map(flags, int)
+						max_value, roll_quantity = map(int, flags)
 					except ValueError:
 						roll_usage()
 						return
