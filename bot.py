@@ -3,7 +3,9 @@ import random
 from flask import Flask, json, request
 import requests
 
-from random import randint
+from random import randint, randrange
+
+from spiderman_urls import spiderman_urls
 
 app = Flask(__name__)
 
@@ -13,6 +15,20 @@ def reply(message):
 		'text'   : message,
 	}
 	requests.post('https://api.groupme.com/v3/bots/post', json=payload)
+
+
+def reply_picture(url):
+	payload = {
+		'bot_id'        : os.environ['BOT_ID'],
+		'attachments'   : [
+			{
+				'type'  : 'image',
+				'url'   : url,
+			},
+		],
+	}
+	requests.post('https://api.groupme.com/v3/bots/post', json=payload)
+
 
 def roll_usage():
 	reply("Usage: /roll [max_value [roll_quantity]]")
@@ -56,6 +72,22 @@ def roll_callback():
 				else:
 					roll_usage()
 					return
+
+			if cmd == "/spiderman":
+				count = 1
+				if len(flags) == 1:
+					try:
+						count_val = int(flags[0])
+						if count_val > 0 and count_val <= 420:
+							count = count_val
+					except ValueError:
+						pass
+
+				for i in range(count):
+					pic_index = randrange(len(spiderman_urls))
+					pic_url = spiderman_urls[pic_index]
+					reply_picture(pic_url)
+
 
 if __name__ == "__main__":
 	port = int(os.environ.get("PORT", 5000))
